@@ -1,2 +1,3 @@
 # handy-dynamo
-Convenient DynamoDB utility classes
+
+Part of the handy-* repositories, containing convenient DynamoDB utility classes.
