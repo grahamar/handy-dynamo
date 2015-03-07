@@ -3,7 +3,10 @@ package com.teambytes.handy.dynamo.replication
 import java.util.concurrent.{TimeUnit, Executors, ScheduledExecutorService, ScheduledFuture}
 
 import com.gilt.gfc.logging.Loggable
+import com.github.dwhjames.awswrap.dynamodb.DynamoDBSerializer
 import com.teambytes.awsleader.{PeriodicTask, LeaderActionsHandler}
+
+import scala.concurrent.ExecutionContext
 
 trait ReplicationLeaderElectionHandler[A] extends LeaderActionsHandler with Loggable {
 
@@ -12,6 +15,10 @@ trait ReplicationLeaderElectionHandler[A] extends LeaderActionsHandler with Logg
   // future around the periodic task, if we are leader & replicating
   @volatile private var scheduledFutures: Iterable[ScheduledFuture[_]] = Iterable.empty
   @volatile private var isLeader = false
+
+  implicit def ec: ExecutionContext
+
+  implicit def serializer: DynamoDBSerializer[A]
 
   def replicationJob: ReplicationJob[A]
 

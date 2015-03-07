@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import com.amazonaws.services.dynamodbv2.document.DynamoDB
 import com.github.dwhjames.awswrap.dynamodb.{AmazonDynamoDBScalaMapper, AmazonDynamoDBScalaClient, DynamoDBSerializer}
 
-import scala.concurrent.Await
+import scala.concurrent.{ExecutionContext, Await}
 import scala.concurrent.duration._
 
 trait DynamoDBApi[A] {
@@ -12,6 +12,8 @@ trait DynamoDBApi[A] {
 }
 
 trait DynamoDBComponent[A] extends DynamoDBApi[A] {
+
+  implicit def ec: ExecutionContext
 
   def sdkClient: AmazonDynamoDBAsyncClient
   protected lazy val dynamoDb = new DynamoDB(sdkClient)
