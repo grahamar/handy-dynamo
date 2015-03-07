@@ -6,6 +6,7 @@ lazy val commonSettings = releaseSettings ++ Seq(
   organization := "com.teambytes.handy",
   scalaVersion := "2.11.5",
   crossScalaVersions := Seq("2.11.4", "2.10.4"),
+  ReleaseKeys.crossBuild := true,
   libraryDependencies ++= Seq(
     "org.mockito"  %  "mockito-all" % "1.9.5" % "test",
     "org.scalatest" %% "scalatest" % "2.2.2" % "test"
