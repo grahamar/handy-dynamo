@@ -7,7 +7,6 @@ lazy val commonSettings = releaseSettings ++ Seq(
   scalaVersion := "2.11.5",
   crossScalaVersions := Seq("2.11.4", "2.10.4"),
   libraryDependencies ++= Seq(
-    "org.slf4j" % "slf4j-api" % "1.7.7",
     "org.mockito"  %  "mockito-all" % "1.9.5" % "test",
     "org.scalatest" %% "scalatest" % "2.2.2" % "test"
   ),
@@ -55,8 +54,9 @@ lazy val publishSignedAction = { st: State =>
 }
 
 lazy val root = (project in file(".")).
-  aggregate(core).
-  settings(commonSettings: _*)
+  aggregate(core, replication).
+  settings(commonSettings: _*).
+  settings(publish := {})
 
 lazy val core = (project in file("core")).
   settings(commonSettings: _*).
@@ -68,3 +68,15 @@ lazy val core = (project in file("core")).
     )
   )
 
+lazy val replication = (project in file("replication")).
+  dependsOn(core).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies ++= Seq(
+      "com.gilt" %% "gfc-logging" % "0.0.2",
+      "com.gilt" %% "gfc-time" % "0.0.4",
+      "com.gilt" %% "gfc-util" % "0.0.4",
+      "org.squeryl" %% "squeryl" % "0.9.5-7",
+      "com.teambytes" %% "aws-leader-election" % "1.0.0"
+    )
+  )
