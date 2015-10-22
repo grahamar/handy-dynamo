@@ -64,8 +64,8 @@ lazy val core = (project in file("core")).
   settings(
     resolvers += Resolver.bintrayRepo("dwhjames", "maven"),
     libraryDependencies ++= Seq(
-      "com.amazonaws" % "aws-java-sdk-dynamodb" % "1.9.23",
-      "com.github.dwhjames" %% "aws-wrap" % "0.7.0"
+      "com.amazonaws" % "aws-java-sdk-dynamodb" % "1.10.27" % "provided",
+      "com.github.dwhjames" %% "aws-wrap" % "0.7.2"
     )
   )
 
